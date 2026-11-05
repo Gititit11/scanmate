@@ -1,5 +1,5 @@
 /* 오프라인 캐시 — 스캔은 전부 기기 안에서 하므로 네트워크 없이도 돌아간다 */
-var CACHE = 'scanner-v2';
+var CACHE = 'scanner-v3';
 var ASSETS = [
   './', './index.html', './manifest.json',
   './css/styles.css', './js/scan.js', './js/pdf.js', './js/app.js', './js/install.js',
