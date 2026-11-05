@@ -14,15 +14,13 @@
  *  - 카톡·인스타 등 앱 안의 브라우저: 크롬(아이폰은 사파리)으로 열어 달라고 한다
  *  - 아이폰: 공유 → 홈 화면에 추가
  *  - 안드로이드에서 잠시 기다려도 신호가 없을 때: 브라우저 메뉴로 설치하는 법
- * 안내를 닫으면 며칠 동안 다시 띄우지 않는다. 진짜 설치 신호가 오면 안내 대신 버튼을 띄운다.
+ * 안내는 들어올 때마다 띄운다(✕ 는 이번에만 닫는다). 진짜 설치 신호가 오면 안내 대신 버튼을 띄운다.
  *
  * gymmate/js/install.js 와 scanner/js/install.js 는 같은 파일이다. 고치면 둘 다 고친다.
  */
 (function () {
   'use strict';
   var HINT_WAIT_MS = 8000;              // 안드로이드에서 설치 신호를 기다리는 시간
-  var HINT_SNOOZE_MS = 3 * 24 * 3600e3; // 안내를 닫으면 다시 띄우지 않는 기간
-  var SNOOZE_KEY = 'install-hint-closed:' + location.pathname;
 
   var ua = navigator.userAgent || '';
   var isIOS = /iPhone|iPad|iPod/i.test(ua) ||
@@ -42,16 +40,6 @@
     return navigator.standalone === true;
   }
 
-  function snoozed() {
-    try {
-      var t = +localStorage.getItem(SNOOZE_KEY);
-      return t > 0 && Date.now() - t < HINT_SNOOZE_MS;
-    } catch (e) { return false; }
-  }
-  function snooze() {
-    try { localStorage.setItem(SNOOZE_KEY, String(Date.now())); } catch (e) { }
-  }
-
   function hide() { if (bar) { bar.remove(); bar = null; } }
 
   function whenReady(fn) {
@@ -59,7 +47,7 @@
     else fn();
   }
 
-  // opts: { text, sub, action, onAction, onClose, hint }
+  // opts: { text, sub, action, onAction, hint }
   function render(opts) {
     hide();
     if (!document.body) return;
@@ -101,7 +89,7 @@
     x.type = 'button'; x.textContent = '✕'; x.setAttribute('aria-label', '닫기');
     x.style.cssText = 'flex:none;align-self:flex-start;border:0;background:transparent;' +
       'color:#5b6577;font:inherit;padding:8px 8px;cursor:pointer';
-    x.addEventListener('click', function () { hide(); if (opts.onClose) opts.onClose(); });
+    x.addEventListener('click', hide);
     bar.appendChild(x);
 
     document.body.appendChild(bar);
@@ -148,9 +136,8 @@
   }
 
   function hint(opts) {
-    if (deferred || snoozed()) return;
+    if (deferred) return;
     opts.hint = true;
-    opts.onClose = snooze;
     render(opts);
   }
 
