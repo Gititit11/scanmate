@@ -1,5 +1,9 @@
 # 스캔메이트
 
+> 주소: **https://gititit11.github.io/scanmate/**
+>
+> 예전에는 `Gititit11/test` 저장소의 `/test/scanner/` 에 있었습니다.
+
 문서를 사진으로 찍으면 스캔한 것처럼 반듯하게 펴서 PDF 로 만들어 주는 웹앱입니다.
 모든 처리는 기기 안에서 하고, 사진은 어디에도 올리지 않습니다. 오프라인에서도 동작합니다.
 
@@ -21,7 +25,7 @@
 | `js/pdf.js` | JPEG 페이지들로 PDF 쓰기 (JPEG 을 그대로 품는 DCTDecode) |
 | `js/app.js` | 화면 흐름 |
 | `sw.js` | 오프라인 캐시 |
-| `tools/build-icons.py` | 아이콘 다시 만들기 (`python3 scanner/tools/build-icons.py`) |
+| `tools/build-icons.py` | 아이콘 다시 만들기 (`python3 tools/build-icons.py`) |
 
 ### 처리 과정
 
@@ -33,6 +37,14 @@
   초점거리를 함께 추정하는 Zhang & He (2007) 방법으로 구해서, 비스듬히 찍어도 A4 는 A4 비율로 나옵니다.
 - **스캔 필터** — 종이 바탕 밝기를 (줄이기 → 최댓값 필터로 글씨 지우기 → 흐림)으로
   추정한 뒤 나눠서 그림자·조명 얼룩을 없애고, 톤 곡선으로 바탕은 하얗게 글씨는 진하게 합니다.
+
+## 실행과 배포
+
+```bash
+npx http-server . -p 8080 --silent   # → http://localhost:8080/
+```
+
+`main` 에 올리면 `.github/workflows/pages.yml` 이 GitHub Pages 로 배포합니다.
 
 ## 알아 둘 점
 

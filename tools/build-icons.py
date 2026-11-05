@@ -1,4 +1,4 @@
-"""스캔메이트 아이콘 만들기: python3 scanner/tools/build-icons.py"""
+"""스캔메이트 아이콘 만들기: python3 tools/build-icons.py"""
 import os
 from PIL import Image, ImageDraw
 

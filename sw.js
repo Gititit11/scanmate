@@ -1,5 +1,7 @@
 /* 오프라인 캐시 — 스캔은 전부 기기 안에서 하므로 네트워크 없이도 돌아간다 */
-var CACHE = 'scanner-v3';
+// 이름이 'scanner' 로 시작하면 안 된다: 예전 주소(/test/scanner/)의 서비스워커가
+// 'scanner…' 캐시를 자기 것으로 알고 지운다. 같은 주소(origin)라 캐시 저장소를 같이 쓴다.
+var CACHE = 'app-scanmate-v1';
 var ASSETS = [
   './', './index.html', './manifest.json',
   './css/styles.css', './js/scan.js', './js/pdf.js', './js/app.js', './js/install.js',
@@ -19,9 +21,9 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('activate', function (e) {
   e.waitUntil(caches.keys().then(function (keys) {
-    // 같은 주소에 다른 앱(gymmate)도 있으니 내 캐시만 정리한다
+    // 같은 주소에 다른 앱(짐메이트 등)도 있으니 내 캐시만 정리한다
     return Promise.all(keys
-      .filter(function (k) { return k.indexOf('scanner') === 0 && k !== CACHE; })
+      .filter(function (k) { return k.indexOf('app-scanmate') === 0 && k !== CACHE; })
       .map(function (k) { return caches.delete(k); }));
   }).then(function () { return self.clients.claim(); }));
 });

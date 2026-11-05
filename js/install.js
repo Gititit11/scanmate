@@ -16,7 +16,7 @@
  *  - 안드로이드에서 잠시 기다려도 신호가 없을 때: 브라우저 메뉴로 설치하는 법
  * 안내는 들어올 때마다 띄운다(✕ 는 이번에만 닫는다). 진짜 설치 신호가 오면 안내 대신 버튼을 띄운다.
  *
- * gymmate/js/install.js 와 scanner/js/install.js 는 같은 파일이다. 고치면 둘 다 고친다.
+ * gymmate 저장소와 scanmate 저장소의 js/install.js 는 같은 파일이다. 고치면 둘 다 고친다.
  */
 (function () {
   'use strict';
